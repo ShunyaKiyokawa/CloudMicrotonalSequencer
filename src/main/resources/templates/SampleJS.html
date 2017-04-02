@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CloudMicrotonalSequencer</title>
+<meta http-equiv="Content-Type" 	content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"></link>
+
+<style>
+h1 { font-size:18pt; font-weight:bold; color:gray; }
+body { font-size:13pt; color:gray; margin:5px 25px; padding-top: 50px;}
+my-inline.form-inline input [type="text"],
+my-inline.form-inline input [type="password"] {width: 180px}
+</style>
+</head>
+<body>
+<nav id="global-nav">
+    <ul>
+        <li><a href="#">TEST</a></li>
+        <li><a href="#">Ha-Ra</a></li>
+        <li class="current"><a href="#">Nicole</a></li>
+    </ul>
+</nav>
+
+<script>
+var nav = document.getElementById('global-nav');
+alert(nav.id); //globalnav
+
+var navItems = nav.getElementsByTagName('li');
+alert(navItems.length); //3
+
+var currentItems = nav.getElementsByClassName('current');
+alert(currentItems.length); //1
+alert(currentItems.item(0).innerText); //Nicole
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CloudMicrotonalSequencer</title>
+<meta http-equiv="Content-Type" 	content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"></link>
+
+<style>
+h1 { font-size:18pt; font-weight:bold; color:gray; }
+body { font-size:13pt; color:gray; margin:5px 25px; padding-top: 50px;}
+my-inline.form-inline input [type="text"],
+my-inline.form-inline input [type="password"] {width: 180px}
+</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col col-md-12">
+			<h1>CloudMicrotonalSequecer</h1>
+			<form th:action="@{/sequencer/18}" method="get" >
+				<input type="submit"  value="シーケンサのページ" class="btn btn-default btn-sm"/>
+			</form>
+			<form th:action="@{/testindex}" method="get">
+				<input type="submit"  value="testindex" class="btn btn-default btn-sm"/>
+			</form>
+			<input type="submit"  onclick="location.href='/SampleJQuery'" value="jQuerySample" class="btn btn-default btn-sm"/>
+			<input type="submit"  onclick="location.href='/SampleJS'" value="SampleJS" class="btn btn-default btn-sm"/>
+			<input type="submit"  onclick="location.href='/BootStrap'" value="BootStrapSample" class="btn btn-default btn-sm"/>
+		</div>
+	</div>
+
+
+	<div>
+		<audio controls="controls">
+			<source src="mp3/sample/do.mp3" type="audio/mpeg"></source>
+			Your browser does not support the HTML5 audio element.
+		</audio>
+		<br></br>
+	  <audio controls="controls">
+			<source src="mp3/sample/re.mp3" type="audio/mpeg"></source>
+			Your browser does not support the HTML5 audio element.
+		</audio>
+	</div>
+
+
+<!-- bootstrapのjsの読み込み -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- httpでwebサイトからjs読み込むとhttpsじゃないと怒られるのでstaticにいれてある -->
+<script src="jQuery/jquery-3.1.1.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+
+</body>
+</html>

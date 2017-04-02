@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CloudMicrotonalSequencer</title>
+<meta http-equiv="Content-Type" 	content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"></link>
+
+<style>
+h1 { font-size:18pt; font-weight:bold; color:gray; }
+body { font-size:13pt; color:gray; margin:5px 25px; padding-top: 50px;}
+my-inline.form-inline input [type="text"],
+my-inline.form-inline input [type="password"] {width: 180px}
+</style>
+</head>
+<body>
+
+
+<h1 th:text="#{content.title}">Helo page</h1>
+<p th:text="${msg}"></p>
+<p th:text="${nEdoValueString}" ></p> <!-- OK -->
+<p th:text="${nEdoValueInt}" ></p> <!-- OK -->
+ <!--<p th:text="${param.edo[0]}"></p> OK -->
+${{nEdoValueInt}}
+th:${{nEdoValueInt}}
+
+<input class="btn btn-success btn-lg" type="button" value="Bootstrapのボタン" />
+
+<table class="table table-bordered table-hover table-condensed table-responsive table-striped">
+<thead><tr><th>test</th><th>test</th></tr></thead>
+<tbody>
+<tr><td>sss</td><td>sss</td></tr>
+<tr><td>sss</td><td>sss</td></tr>
+</tbody>
+</table>
+
+<!-- このテーブルを最後に表示するような対応を入れないとtable classが反映されないのでは？ -->
+<table id="MainTable">
+<thead id="SequencerSetThead">
+</thead>
+<tbody  id="SequencerSetTbody">
+</tbody>
+</table>
+
+
+<audio id="soundFile" preload="auto">
+	<source src="/mp3/do.mp3" type="audio/mp3" />
+</audio>
+
+
+<audio controls="controls">
+	<source src="/mp3/do.mp3" type="audio/mpeg"></source>
+	Your browser does not support the HTML5 audio element.
+</audio>
+<br></br>
+<audio controls="controls">
+	<source src="/mp3/re.mp3" type="audio/mpeg"></source>
+	Your browser does not support the HTML5 audio element.
+</audio>
+
+
+<!-- bootstrapのjsの読み込み -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- httpでwebサイトからjs読み込むとhttpsじゃないと怒られるのでstaticにいれてある -->
+<script src="/jQuery/jquery-3.1.1.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script src="/OriginalJS/Sound.js"></script>
+<script src="/OriginalJS/MakeSequencerView.js" ></script>
+<!-- <script src="OriginalJS/MakeSequencerView.js" th:inline="javascript">
+という書き方にしても、js側がthymeleafの書き方認識できず失敗する。
+そのため一度中継する書き方をする</script> -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+
+$(function(){
+	
+	MakeSequencerViewRelay();
+	//alert('読み込み完了');
+});
+	
+var MakeSequencerViewRelay = function(){
+	var defaultSize = 9;
+	//alert(/*[[${nEdoValueString}]]*/); //OK
+	//var GetnEdoValue = /*[[${nEdoValueString}]]*/ ;
+	//alert(GetnEdoValue); //OK
+	//alert(/*[[${(nEdoValueInt)}]]*/); //OK
+	//nEDOValueIntの箇所にparam.edo[0]でも動く。java側でルーティングせずに書いた場合 ?edo=11などで反応する
+	MakeSequencerView(/*[[${(nEdoValueInt)}]]*/, defaultSize); //OK
+/*]]>*/
+}
+</script>
+
+</body>
+</html>
