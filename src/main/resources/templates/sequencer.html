@@ -27,7 +27,7 @@ th:${{nEdoValueInt}}
 
 <input class="btn btn-success btn-lg" type="button" value="Bootstrapのボタン" />
 
-<table class="table table-bordered table-hover table-condensed table-responsive table-striped">
+<table class="table table-bordered table-hover table-condensed table-responsive table-striped" style="table-layout:fixed;">
 <thead><tr><th>test</th><th>test</th></tr></thead>
 <tbody>
 <tr><td>sss</td><td>sss</td></tr>
@@ -36,13 +36,14 @@ th:${{nEdoValueInt}}
 </table>
 
 <!-- このテーブルを最後に表示するような対応を入れないとtable classが反映されないのでは？ -->
-<table id="MainTable">
+<div class="table-responsive"> <!-- tableをdivでくくって横スクロールだす -->
+<table id="MainTable" onmousedown="mouseDown(this, event); return false;" onmouseup="mouseUp(this, event);" onmousemove="mouseMove(this, event); return false;">
 <thead id="SequencerSetThead">
 </thead>
 <tbody  id="SequencerSetTbody">
 </tbody>
 </table>
-
+</div>
 
 <audio id="soundFile" preload="auto">
 	<source src="/mp3/do.mp3" type="audio/mp3" />
@@ -67,6 +68,7 @@ th:${{nEdoValueInt}}
 <script src="/bootstrap/js/bootstrap.js"></script>
 <script src="/OriginalJS/Sound.js"></script>
 <script src="/OriginalJS/MakeSequencerView.js" ></script>
+<script src="/OriginalJS/DragAndDrop.js" ></script>
 <!-- <script src="OriginalJS/MakeSequencerView.js" th:inline="javascript">
 という書き方にしても、js側がthymeleafの書き方認識できず失敗する。
 そのため一度中継する書き方をする</script> -->
