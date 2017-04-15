@@ -34,16 +34,50 @@ function mouseMove(table, e){
 	if(!from || !to)
 		return false;
  
-	// 色を変更
+
 	var x, y, cells;
-	for(y=0; y<table.rows.length; y++){
-		row = table.rows.item(y);
-		for(x=0; x<row.cells.length; x++){
-			//if((from.row-y)*(y-to.row)>=0 && (from.col-x)*(x-to.col)>=0) //yを受け付けないようにした
-			if((from.row-y)*(y-from.row)>=0 && (from.col-x)*(x-to.col)>=0)
-				row.cells.item(x).style.backgroundColor = "#ffdddd";// 選択状態の色
-			else
-				row.cells.item(x).style.backgroundColor = "transparent";// 未選択状態の色
+	// 鉛筆モード、色を変更してNoteSetクラスをセットする
+	if($("input[id='rd0']:checked").val()){
+		for(y=0; y<table.rows.length; y++){
+			row = table.rows.item(y);
+			for(x=0; x<row.cells.length; x++){
+				//if((from.row-y)*(y-to.row)>=0 && (from.col-x)*(x-to.col)>=0) //yを受け付けないようにした
+				//NoteSetClassがないとき
+				if((from.row-y)*(y-from.row)>=0 && (from.col-x)*(x-to.col)>=0){
+					row.cells.item(x).style.backgroundColor = "#ffdddd"; // 選択状態の色
+					//row.cells.item(x).class = "NoteSet"; //そもそもデフォルトでこんなのない
+					$(row.cells.item(x)).addClass('NoteSet'); 
+					//$(row.cells.item(x)).removeClass('NoteUnset');
+				/*
+				else
+					row.cells.item(x).style.backgroundColor = "transparent";// 未選択状態の色
+					*/
+				}
+				//NoteSetClassがある時 //if ( $('div').hasClass('hoge') ) ; http://qiita.com/mimoe/items/312bf70547825f5d9133
+				//たしかにドラッグ＆ドロップでのノート移動が理想だが、それよりまず、消しゴムモードで消せればOK
+			}
+		}
+	}
+	//消しゴム。色を変更してNoteUnsetクラスをセットする
+	if($("input[id='rd1']:checked").val()){
+		for(y=0; y<table.rows.length; y++){
+			row = table.rows.item(y);
+			for(x=0; x<row.cells.length; x++){
+				//if((from.row-y)*(y-to.row)>=0 && (from.col-x)*(x-to.col)>=0) //yを受け付けないようにした
+				//NoteSetClassがないとき
+				if((from.row-y)*(y-from.row)>=0 && (from.col-x)*(x-to.col)>=0){
+					row.cells.item(x).style.backgroundColor = "transparent"; // 選択状態の色
+					//row.cells.item(x).class = "NoteSet"; //そもそもデフォルトでこんなのない
+					//$(row.cells.item(x)).addClass('NoteUnset');
+					$(row.cells.item(x)).removeClass('NoteSet'); 
+				/*
+				else
+					row.cells.item(x).style.backgroundColor = "transparent";// 未選択状態の色
+					*/
+				}
+				//NoteSetClassがある時 //if ( $('div').hasClass('hoge') ) ; http://qiita.com/mimoe/items/312bf70547825f5d9133
+				//たしかにドラッグ＆ドロップでのノート移動が理想だが、それよりまず、消しゴムモードで消せればOK
+			}
 		}
 	}
 }
@@ -87,6 +121,8 @@ function mouseUp(table, e){
 	startCell = null;
 	 
 	// ここに選択後の処理を書く
-		//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+to.row+")");
-	alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+from.row+")"); //yを受け付けないようにした
+	//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+to.row+")"); //もとのソース
+	//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+from.row+")"); //yを受け付けないようにした
+	
+	//Note.SetRange(from.col, from.row, to.col); //その範囲を保存する
 }
