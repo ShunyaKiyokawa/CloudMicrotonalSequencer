@@ -5,17 +5,23 @@ tableタグに下記を追加
  <table onmousedown="mouseDown(this, event); return false;" onmouseup="mouseUp(this, event);" onmousemove="mouseMove(this, event); return false;">
 */
 
-var startCell = null;
+var NoteCell = {
+	noteEndCell: null,
+	startCell: null
+};
+
 // マウスダウンのイベント処理
 // セルの選択をさせるtableのonMouseDownイベント
 function mouseDown(table, e){
 	if (!e) var e = window.event;
-	startCell = e.srcElement? e.srcElement: e.target;
-	if(startCell.tagName != "TD"){
-		startCell = null;
+	NoteCell.startCell = e.srcElement? e.srcElement: e.target;
+	if(NoteCell.startCell.tagName != "TD"){
+		NoteCell.startCell = null;
 		return;
 	}
+	$(event.target).addClass('NoteStart'); 
 	mouseMove(table, e);
+	 
 }
 	
 //onMouseMoveイベントで呼ぶ処理。
@@ -25,11 +31,11 @@ function mouseMove(table, e){
 	if (!e) var e = window.event;
  
 	var endCell = e.srcElement?e.srcElement:e.target;
-	if(!(endCell.tagName=="TD" && startCell))
+	if(!(endCell.tagName=="TD" && NoteCell.startCell))
 		return false;
  
 	// セルの位置を取得
-	var from = getCellPos(table, startCell); //開始位置
+	var from = getCellPos(table, NoteCell.startCell); //開始位置
 	var to = getCellPos(table, endCell); //終了位置
 	if(!from || !to)
 		return false;
@@ -45,13 +51,12 @@ function mouseMove(table, e){
 				//NoteSetClassがないとき
 				if((from.row-y)*(y-from.row)>=0 && (from.col-x)*(x-to.col)>=0){
 					row.cells.item(x).style.backgroundColor = "#ffdddd"; // 選択状態の色
-					//row.cells.item(x).class = "NoteSet"; //そもそもデフォルトでこんなのない
 					$(row.cells.item(x)).addClass('NoteSet'); 
+					NoteCell.noteEndCell=row.cells.item(x);
 					//$(row.cells.item(x)).removeClass('NoteUnset');
-				/*
-				else
+				}
+				else{
 					row.cells.item(x).style.backgroundColor = "transparent";// 未選択状態の色
-					*/
 				}
 				//NoteSetClassがある時 //if ( $('div').hasClass('hoge') ) ; http://qiita.com/mimoe/items/312bf70547825f5d9133
 				//たしかにドラッグ＆ドロップでのノート移動が理想だが、それよりまず、消しゴムモードで消せればOK
@@ -102,27 +107,28 @@ function getCellPos(table, cell){
 	return null;
 }
 
+
 //マウスアップのイベント処理
 // onMouseUpイベントで以下のような関数を呼び、マウスが動いても選択状態を更新しないようにしてから、選択後の処理を実行する。
 function mouseUp(table, e){
 	if (!e) var e = window.event;
 	 
 	var endCell = e.srcElement?e.srcElement:e.target;
-	if(!(endCell.tagName=="TD" && startCell))
+	if(!(endCell.tagName=="TD" && NoteCell.startCell))
 		return false;
 	 
 	// セルの位置を取得
-	var from = getCellPos(table, startCell);
+	var from = getCellPos(table, NoteCell.startCell);
 	var to = getCellPos(table, endCell);
 	if(!from || !to)
 		return false;
 	 
 	// mouseMoveで選択状態表示の更新をさせないようにする
-	startCell = null;
+	NoteCell.startCell = null;
 	 
 	// ここに選択後の処理を書く
 	//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+to.row+")"); //もとのソース
 	//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+from.row+")"); //yを受け付けないようにした
-	
+	$(NoteCell.noteEndCell).addClass('NoteEnd');
 	//Note.SetRange(from.col, from.row, to.col); //その範囲を保存する
 }
