@@ -50,14 +50,22 @@ function mouseMove(table, e){
 				//if((from.row-y)*(y-to.row)>=0 && (from.col-x)*(x-to.col)>=0) //yを受け付けないようにした
 				//NoteSetClassがないとき
 				if((from.row-y)*(y-from.row)>=0 && (from.col-x)*(x-to.col)>=0){
-					row.cells.item(x).style.backgroundColor = "#ffdddd"; // 選択状態の色
+					//row.cells.item(x).style.backgroundColor = "#ffdddd"; // 選択状態の色
+					$(row.cells.item(x)).css('background-color', 'Lime');
 					$(row.cells.item(x)).addClass('NoteSet'); 
+					$(row.cells.item(x)).css('border-right-style', 'hidden');
 					NoteCell.noteEndCell=row.cells.item(x);
 					//$(row.cells.item(x)).removeClass('NoteUnset');
 				}
+				
 				else{
-					row.cells.item(x).style.backgroundColor = "transparent";// 未選択状態の色
+					//ここはロッククラスがついていないものに対する処理
+					//row.cells.item(x).style.backgroundColor = "transparent";// 未選択状態の色
+					$(row.cells.item(x)).not('.lock').css('background-color', 'transparent');
+					$(row.cells.item(x)).not('.lock').removeClass('NoteSet');
+					$(row.cells.item(x)).not('.lock').css('border-right-style', 'solid');
 				}
+				
 				//NoteSetClassがある時 //if ( $('div').hasClass('hoge') ) ; http://qiita.com/mimoe/items/312bf70547825f5d9133
 				//たしかにドラッグ＆ドロップでのノート移動が理想だが、それよりまず、消しゴムモードで消せればOK
 			}
@@ -129,6 +137,15 @@ function mouseUp(table, e){
 	// ここに選択後の処理を書く
 	//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+to.row+")"); //もとのソース
 	//alert("'from.colとfrom.row'("+from.col+", "+from.row+") -> 'to.colとto.row'("+to.col+", "+from.row+")"); //yを受け付けないようにした
-	$(NoteCell.noteEndCell).addClass('NoteEnd');
-	//Note.SetRange(from.col, from.row, to.col); //その範囲を保存する
+	if(from.col>to.col){
+		alert("fromがtoより大きいです。")
+		//ここのエラーハンドリングついかすること
+	}else{
+		$(NoteCell.noteEndCell).addClass('NoteEnd');
+		$(NoteCell.noteEndCell).css('border-right-style', 'solid'); //これを基準に表の枠線を消す
+		$('.NoteSet').addClass('lock');
+		//Note.SetRange(from.col, from.row, to.col); //その範囲を保存する
+		//lockクラスがないものに関して、lockクラスを設定する。
+		Note.MakeObject();
+	}
 }
