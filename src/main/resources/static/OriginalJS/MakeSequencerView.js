@@ -34,6 +34,6 @@ var MakeSequencerView = function(nEdoValue, defaultSize){
 	});
 	$(function(){
 		$('#MainTable').addClass('table table-bordered table-hover table-condensed table-striped');
-		$('#MainTable').css({"table-layout":"fixed"}); //widthを効かせるためのstyleをセット
+		$('#MainTable').css('table-layout', 'fixed'); //widthを効かせるためのstyleをセット
 	});
 }
